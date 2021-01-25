@@ -59,29 +59,39 @@ function createDivsForColors(colorArray) {
 		gameContainer.append(newDiv);
 	}
 }
+//section
+//this is here to be able to change the text when the user wins the game
 const h1 = document.querySelector('h1');
 //game reset
 const btnReset = document.querySelector('#reset');
 btnReset.addEventListener('click', function() {
 	location.reload();
 });
-
+//
+// makes sure everything starts at zero
 let counter = 0;
 let first = 0;
 let second = 0;
 let eventOne = 0;
 let eventTwo = 0;
 let score = 0;
+
 function handleCardClick(event) {
+	//for ease of coding
 	let e = event.target;
+	//flips the card with the color based on its classname
+	//select 1
 	if (counter === 0) {
-		flipToFront(e);
+		flipFront(e);
 		eventOne = e;
 		first = e.className;
 		counter++;
 		return;
+		//flips the card with the color based on its classname
+		//select 2
 	} else if (counter === 1) {
-		flipToFront(e);
+		//if this is the matching one remove ability to click
+		flipFront(e);
 		eventTwo = e;
 		second = e.className;
 		counter++;
@@ -99,19 +109,21 @@ function handleCardClick(event) {
 				h1.innerHTML = 'You Won, Reset Game!!!!!!!!!!!!!!!!!!!';
 			}
 		} else {
+			//if the selections don't match reset
 			setTimeout(function() {
 				second = 0;
 				first = 0;
 				counter = 0;
-				flipToBack(eventOne);
-				flipToBack(eventTwo);
+				flipBack(eventOne);
+				flipBack(eventTwo);
 				eventOne = 0;
 				eventTwo = 0;
 			}, 1000);
 		}
 	} else if (counter > 1) {
-		flipToBack(eventOne);
-		flipToBack(eventTwo);
+		// count can't be more than one
+		flipBack(eventOne);
+		flipBack(eventTwo);
 		eventOne = 0;
 		eventTwo = 0;
 		second = 0;
@@ -120,11 +132,11 @@ function handleCardClick(event) {
 		return;
 	}
 }
-
-function flipToBack(e) {
+//flip back and front functions
+function flipBack(e) {
 	e.style.backgroundColor = 'white';
 }
-function flipToFront(e) {
+function flipFront(e) {
 	e.style.backgroundColor = e.className;
 }
 
